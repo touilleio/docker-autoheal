@@ -1,0 +1,27 @@
+version: "3"
+
+services:
+
+  dummy-healtchecks:
+    image: docker.touille.io/touille/dummy-healthchecks:v1
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - "55555:8080"
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - "autoheal=true"
+
+  docker-autoheal:
+    image: docker.touille.io/touille/docker-autoheal:v1
+    restart: unless-stopped
+    network_mode: bridge
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - LOG_LEVEL=debug
+    labels:
+      - "prometheus.io/scrape=true"
