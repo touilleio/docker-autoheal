@@ -16,12 +16,9 @@ require (
 	github.com/prometheus/client_golang v1.9.0
 	github.com/stretchr/testify v1.6.1
 	google.golang.org/grpc v1.34.0 // indirect
-	github.com/sqooba/go-common/logging v0.0.0-20201231000000
-	github.com/sqooba/go-common/version v0.0.0-20201231000000
+	github.com/sqooba/go-common v0.0.0-20201231000000
 )
 
 replace (
-	//github.com/sqooba/go-common/healthchecks => ../sqooba-go-common/healthchecks
-	github.com/sqooba/go-common/logging => ../sqooba-go-common/logging
-	github.com/sqooba/go-common/version => ../sqooba-go-common/version
+	github.com/sqooba/go-common => ../sqooba-go-common
 )

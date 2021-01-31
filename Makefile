@@ -1,12 +1,12 @@
 
 VERSION=v1.0.0
-arch=amd64
-
+GOOS=linux
 GOCMD=go
 GOBUILD=$(GOCMD) build
 GOCLEAN=$(GOCMD) clean
 GOTEST=$(GOCMD) test
 GOLINT=golangci-lint run
+DOCKER=docker
 VERSION_MAJOR=$(shell echo $(VERSION) | cut -f1 -d.)
 VERSION_MINOR=$(shell echo $(VERSION) | cut -f2 -d.)
 BINARY_NAME=docker-autoheal
@@ -17,7 +17,7 @@ GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 BUILD_DATE=$(shell date '+%Y-%m-%d-%H:%M:%S')
 
 ensure:
-	GOARCH=$(arch) GOOS=linux go mod vendor
+	GOOS=${GOOS} $(GOCMD) mod vendor
 
 clean:
 	$(GOCLEAN)
@@ -26,23 +26,23 @@ lint:
 	$(GOLINT) ...
 
 build:
-	GOARCH=$(arch) GOOS=linux go build \
+	GOOS=${GOOS} $(GOBUILD) \
 		-ldflags "-X version.GitCommit=${GIT_COMMIT}${GIT_DIRTY} \
 				  -X version.BuildDate=${BUILD_DATE} \
 				  -X version.Version=${VERSION}" \
-		-o ${BINARY_NAME}-$(arch) .
+		-o ${BINARY_NAME} .
 
 package:
-	docker build -f Dockerfile \
+	$(DOCKER) build -f Dockerfile \
 	  -t ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION) \
 	  -t ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR) \
 	  -t ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR) \
 	  .
 
 test:
-	go test ./...
+	$(GOTEST) ./...
 
 release:
-	docker push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION)
-	docker push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR)
-	docker push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR)
+	$(DOCKER) push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION)
+	$(DOCKER) push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR)
+	$(DOCKER) push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR)

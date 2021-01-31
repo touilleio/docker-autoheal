@@ -125,13 +125,15 @@ func (h *dockerHandler) getManagedContainerAndKillTimeoutFromLabels(labels map[s
 		isManaged = true
 	}
 
+	killTimeout = h.config.DefaultStopTimeout
 	if v, ok := labels[dockerLabelStopTimeout]; ok {
 		var kt time.Duration
 		kt, err = time.ParseDuration(v)
 		if err != nil {
-			return
+			log.Warnf("Can't parse annotation %s=%s to duration, taking default duration %s instead", dockerLabelStopTimeout, v, h.config.DefaultStopTimeout)
+		} else {
+			killTimeout = kt
 		}
-		killTimeout = kt
 	}
 	return
 }
