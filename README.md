@@ -38,3 +38,10 @@ are duration and are treated as seconds if no unit provided. For more precision 
 | autoheal.stop.timeout | Per containers override for stop timeout seconds during restart, as a duration, e.g. `120s` |
 
 # Metrics
+
+| Metrics name | Type | Description |
+|--------------|------|-------------|
+| check_count | counter | Count how many times containers have been checked |
+| check_failure_count | counter | Count how many failures happened trying to check containers |
+| restart_count | counter | Count how many containers have been restated |
+| restart_failure_count | counter | Count how many restart failures happened |
