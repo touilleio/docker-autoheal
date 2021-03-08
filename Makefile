@@ -10,8 +10,8 @@ DOCKER=docker
 VERSION_MAJOR=$(shell echo $(VERSION) | cut -f1 -d.)
 VERSION_MINOR=$(shell echo $(VERSION) | cut -f2 -d.)
 BINARY_NAME=docker-autoheal
-GO_PACKAGE=touille/docker-autoheal
-DOCKER_REGISTRY=docker.touille.io
+GO_PACKAGE=touilleio/docker-autoheal
+DOCKER_REGISTRY
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 BUILD_DATE=$(shell date '+%Y-%m-%d-%H:%M:%S')
@@ -34,15 +34,15 @@ build:
 
 package:
 	$(DOCKER) build -f Dockerfile \
-	  -t ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION) \
-	  -t ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR) \
-	  -t ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR) \
+	  -t ${DOCKER_REGISTRY}${GO_PACKAGE}:$(VERSION) \
+	  -t ${DOCKER_REGISTRY}${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR) \
+	  -t ${DOCKER_REGISTRY}${GO_PACKAGE}:$(VERSION_MAJOR) \
 	  .
 
 test:
 	$(GOTEST) ./...
 
 release:
-	$(DOCKER) push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION)
-	$(DOCKER) push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR)
-	$(DOCKER) push ${DOCKER_REGISTRY}/${GO_PACKAGE}:$(VERSION_MAJOR)
+	$(DOCKER) push ${DOCKER_REGISTRY}${GO_PACKAGE}:$(VERSION)
+	$(DOCKER) push ${DOCKER_REGISTRY}${GO_PACKAGE}:$(VERSION_MAJOR).$(VERSION_MINOR)
+	$(DOCKER) push ${DOCKER_REGISTRY}${GO_PACKAGE}:$(VERSION_MAJOR)
