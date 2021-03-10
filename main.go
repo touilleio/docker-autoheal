@@ -103,21 +103,21 @@ func ensureBackwardCompatibility() {
 
 	if i := os.Getenv("AUTOHEAL_INTERVAL"); i != "" && intRx.MatchString(i) {
 		log.Warnf("[Compatibility] AUTOHEAL_INTERVAL is a duration and should be %ss", i)
-		os.Setenv("AUTOHEAL_INTERVAL", i + "s")
+		os.Setenv("AUTOHEAL_INTERVAL", i+"s")
 	}
 
 	if i := os.Getenv("AUTOHEAL_START_PERIOD"); i != "" && intRx.MatchString(i) {
 		log.Warnf("[Compatibility] AUTOHEAL_START_PERIOD is a duration and should be %ss", i)
-		os.Setenv("AUTOHEAL_START_PERIOD", i + "s")
+		os.Setenv("AUTOHEAL_START_PERIOD", i+"s")
 	}
 
 	if i := os.Getenv("AUTOHEAL_DEFAULT_STOP_TIMEOUT"); i != "" && intRx.MatchString(i) {
 		log.Warnf("[Compatibility] AUTOHEAL_DEFAULT_STOP_TIMEOUT is a duration and should be %ss", i)
-		os.Setenv("AUTOHEAL_DEFAULT_STOP_TIMEOUT", i + "s")
+		os.Setenv("AUTOHEAL_DEFAULT_STOP_TIMEOUT", i+"s")
 	}
 
 	if i := os.Getenv("CURL_TIMEOUT"); i != "" && intRx.MatchString(i) {
 		log.Warnf("[Compatibility] CURL_TIMEOUT is a duration and should be %ss", i)
-		os.Setenv("CURL_TIMEOUT", i + "s")
+		os.Setenv("CURL_TIMEOUT", i+"s")
 	}
 }
