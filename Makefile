@@ -11,7 +11,7 @@ VERSION_MAJOR=$(shell echo $(VERSION) | cut -f1 -d.)
 VERSION_MINOR=$(shell echo $(VERSION) | cut -f2 -d.)
 BINARY_NAME=docker-autoheal
 GO_PACKAGE=touilleio/docker-autoheal
-DOCKER_REGISTRY
+DOCKER_REGISTRY=
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
 BUILD_DATE=$(shell date '+%Y-%m-%d-%H:%M:%S')
